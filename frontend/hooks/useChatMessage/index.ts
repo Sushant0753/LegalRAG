@@ -9,6 +9,7 @@ type BackendInlineCitation = {
   text_excerpt?: string;
 };
 
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 function safeJsonParse<T = any>(raw: string): T | null {
   try {
     return JSON.parse(raw);
@@ -17,6 +18,7 @@ function safeJsonParse<T = any>(raw: string): T | null {
   }
 }
 
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseDollarWrappedJson(str: string): any | null {
   // Matches strings like: "$$\n{ ...json... }\n$$"
   const m = str.match(/^\s*\$\$([\s\S]*?)\$\$\s*$/);
@@ -94,7 +96,7 @@ function parseBackendResponse(
   pageNumber?: number | string;
   paragraphNumber?: number | string;
 } {
-  // Try parsing top-level JSON
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   const top = safeJsonParse<any>(rawResponse);
 
   // Case 1: Plain text fallback
