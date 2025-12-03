@@ -19,7 +19,7 @@ function safeJsonParse<T = any>(raw: string): T | null {
 
 function parseDollarWrappedJson(str: string): any | null {
   // Matches strings like: "$$\n{ ...json... }\n$$"
-  const m = str.match(/^\s*\$\$(.*?)\$\$\s*$/s);
+  const m = str.match(/^\s*\$\$([\s\S]*?)\$\$\s*$/);
   if (!m) return null;
   const inner = m[1].trim();
   return safeJsonParse(inner);
