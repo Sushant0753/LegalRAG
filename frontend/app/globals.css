@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode for Tailwind v4 dark: utilities */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Theme variables ── */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0d1218;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0d1218;
+  --foreground: #ededed;
 }
 
 body {
@@ -18,32 +20,49 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ── bg-dots: dark = dots, light = plain white ── */
 .bg-dots {
-  background-color: #0D1218; 
-  background-image: radial-gradient(#ffffff80 0.25px, transparent 1px);
-  background-size: 25px 25px; 
+  background-color: #ededed;
+  background-image: radial-gradient(#00000020 0.25px, transparent 1px);
+  background-size: 25px 25px;
 }
 
-/* Width of the scrollbar */
+.dark .bg-dots {
+  background-color: #0d1218;
+  background-image: radial-gradient(#ffffff80 0.25px, transparent 1px);
+  background-size: 25px 25px;
+}
+
+/* ── Scrollbar: dark mode ── */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* ── Scrollbar: light mode ── */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px; /* for horizontal scrollbar */
+  height: 8px;
 }
-
-/* Track (background) */
 ::-webkit-scrollbar-track {
-  background: #1f2937; /* neutral-800 */
+  background: #f1f5f9;
   border-radius: 9999px;
 }
-
-/* Thumb (the draggable handle) */
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6; /* blue-600 */
+  background: #cbd5e1;
   border-radius: 9999px;
-  transition: background 0.3s;
 }
-
-/* Hover effect */
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb; /* blue-700 */
+  background: #94a3b8;
 }

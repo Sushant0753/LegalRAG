@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import TopNavbar from "@/components/TopNavbar";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +27,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Anti-flash: apply saved theme class before React hydrates */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem('theme') || 'dark';
+                  if (t === 'dark') document.documentElement.classList.add('dark');
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Sidebar />
-        {children}
+        <ThemeProvider>
+          <TopNavbar />
+          <Sidebar />
+          <div className="pt-14">
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

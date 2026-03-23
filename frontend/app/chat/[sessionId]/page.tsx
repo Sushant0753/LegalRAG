@@ -70,7 +70,11 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-dots">
+    /*
+     * h-[calc(100vh-3.5rem)] accounts for the 3.5rem (56px = h-14) top navbar
+     * that layout.tsx renders above all page content.
+     */
+    <div className="flex flex-col h-[calc(100vh-3.5rem)] bg-dots">
       {/* Chat messages */}
       <div
         ref={containerRef}
@@ -87,15 +91,15 @@ export default function ChatPage() {
                 className={`rounded-2xl px-4 py-2 shadow break-words ${
                   msg.isUser
                     ? "bg-blue-600 text-white"
-                    : "bg-neutral-800 text-neutral-200 inline-block"
+                    : "bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-transparent inline-block"
                 }`}
               >
                 <p className="whitespace-pre-wrap break-words">{msg.text}</p>
 
                 {/* File chip */}
                 {msg.filename && (
-                  <div className="inline-flex items-center gap-2 text-sm text-neutral-200 mt-2 bg-neutral-700 px-2 py-2 rounded-full shadow max-w-48">
-                    <FiFileText size={16} className="text-neutral-300" />
+                  <div className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-200 mt-2 bg-neutral-100 dark:bg-neutral-700 px-2 py-2 rounded-full shadow max-w-48">
+                    <FiFileText size={16} className="text-neutral-500 dark:text-neutral-300" />
                     <span className="truncate flex-1 pr-6">{msg.filename}</span>
                   </div>
                 )}
@@ -107,18 +111,20 @@ export default function ChatPage() {
                   {/* Sources Section */}
                   {msg.sources && msg.sources.length > 0 && (
                     <div className="mt-3 mb-2 pl-2 space-y-2">
-                      <p className="text-sm font-semibold text-neutral-300">Sources:</p>
+                      <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                        Sources:
+                      </p>
                       {msg.sources.map((s, i) => (
                         <div
                           key={i}
-                          className="text-xs text-neutral-400 bg-neutral-700/40 p-2 rounded-lg"
+                          className="text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-700/40 p-2 rounded-lg"
                         >
                           <p>
                             <strong>File:</strong> {s.source_file}
                           </p>
                           <p>
-                            <strong>Page:</strong> {s.page} • <strong>Paragraph:</strong>{" "}
-                            {s.paragraph}
+                            <strong>Page:</strong> {s.page} •{" "}
+                            <strong>Paragraph:</strong> {s.paragraph}
                           </p>
                           {s.text_excerpt && (
                             <p className="italic opacity-75 mt-1">{s.text_excerpt}</p>
@@ -128,12 +134,11 @@ export default function ChatPage() {
                     </div>
                   )}
 
-
                   {/* Actions */}
                   <div className="flex gap-2 pl-2">
                     {/* Regenerate */}
                     <button
-                      className="bg-transparent hover:bg-neutral-700/50 text-neutral-400 hover:text-neutral-200 p-2 rounded-lg transition-all cursor-pointer"
+                      className="bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-700/50 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 p-2 rounded-lg transition-all cursor-pointer"
                       onClick={() => regenerateMessage(msg)}
                       title="Regenerate message"
                     >
@@ -142,7 +147,7 @@ export default function ChatPage() {
 
                     {/* Copy */}
                     <button
-                      className="bg-transparent hover:bg-neutral-700/50 text-neutral-400 hover:text-neutral-200 p-2 rounded-lg transition-all cursor-pointer flex items-center gap-1"
+                      className="bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-700/50 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 p-2 rounded-lg transition-all cursor-pointer flex items-center gap-1"
                       onClick={() => copyMessage(msg.text, msg.id)}
                       title="Copy message"
                     >
@@ -158,7 +163,7 @@ export default function ChatPage() {
                   </div>
 
                   <div className="pl-2 mt-1">
-                    <p className="text-xs text-neutral-500 italic">
+                    <p className="text-xs text-neutral-400 dark:text-neutral-500 italic">
                       This AI can make mistakes. Please double-check responses.
                     </p>
                   </div>
@@ -170,7 +175,7 @@ export default function ChatPage() {
       </div>
 
       {/* Chat Input */}
-      <div className="p-4">
+      <div className="p-4 bg-dots dark:bg-transparent backdrop-blur-sm">
         <ChatInput sendUserMessage={sendUserMessage} />
       </div>
     </div>

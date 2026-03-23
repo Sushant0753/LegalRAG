@@ -48,10 +48,8 @@ export default function Home() {
       }
     } catch (err) {
       console.error("Failed to serialize file:", err);
-      // We proceed without the file if serialization fails
     }
 
-    // Store first message payload (no documentId needed now)
     window.sessionStorage.setItem(
       `first-message-${sessionId}`,
       JSON.stringify({
@@ -64,19 +62,19 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-screen bg-dots text-white">
+    /* h-[calc(100vh-3.5rem)] accounts for the 3.5rem (56px = h-14) top navbar added by layout */
+    <div className="h-[calc(100vh-3.5rem)] w-full bg-dots text-neutral-900 dark:text-white">
       <main className="ml-16 h-full">
         <div className="h-full flex flex-col items-center justify-center px-4">
-          <h1 className="text-4xl font-bold text-blue-400 mb-10">
-            How can I help you today?
+          <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-10">
+            Hii, How can I help you today?
           </h1>
 
-            {/* Optional status indicator when doing base64 work */}
-            {isPreparing && (
-              <p className="text-sm text-neutral-400 mb-4">
-                Preparing your session...
-              </p>
-            )}
+          {isPreparing && (
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+              Preparing your session...
+            </p>
+          )}
 
           <ChatInput sendUserMessage={handleSend} />
         </div>
